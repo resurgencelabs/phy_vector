@@ -18,6 +18,8 @@ struct Phy_Vector {
     k: fraction::Fraction,
 }
 
+
+// Create a Vector Variable simply
 fn toVector(fi: fraction::Fraction, fj: fraction::Fraction, fk: fraction::Fraction) -> Phy_Vector {
     
     let vc = Phy_Vector {
@@ -29,20 +31,23 @@ fn toVector(fi: fraction::Fraction, fj: fraction::Fraction, fk: fraction::Fracti
 }
 
 
-
+// The x component of the Vector
 fn xOfVector(v: Phy_Vector) -> fraction::Fraction {
     v.i
 }
 
+// The y component of the Vector
 fn yOfVector(v: Phy_Vector) -> fraction::Fraction {
     v.j
 }
 
+// The z component of the Vector
 fn zOfVector(v: Phy_Vector) -> fraction::Fraction {
     v.k
 }
 
 
+// Add two vectors
 fn addVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     let vc = Phy_Vector {
         i: fraction::addFraction(v1.i, v2.i),
@@ -52,6 +57,8 @@ fn addVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     vc
 }
 
+
+// Subtract the second vector from the first
 fn subtractVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     let vc = Phy_Vector {
         i: fraction::subtractFraction(v1.i, v2.i),
@@ -61,6 +68,8 @@ fn subtractVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     vc
 }
 
+
+// The scalar product of two vectors
 fn scProductVector(v1: Phy_Vector, v2: Phy_Vector) -> fraction::Fraction {
     let s1 = fraction::multiplyFraction(v1.i, v2.i);
     let s2 = fraction::multiplyFraction(v1.j, v2.j);
@@ -70,6 +79,8 @@ fn scProductVector(v1: Phy_Vector, v2: Phy_Vector) -> fraction::Fraction {
     s
 }
 
+
+// The vector product of two vectors
 fn vecProductVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     //   i    j    k
     // v1.i v1.j v1.k
@@ -91,9 +102,27 @@ fn vecProductVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     v
 }
 
+
+// The square of the magnitude of a vector
 fn sqModulusVector(v: Phy_Vector) -> fraction::Fraction {
     let s = scProductVector(v, v);
     s
+}
+
+
+// Returns true if two vectors are exactly equal
+fn isEqual(v1: Phy_Vector, v2: Phy_Vector) -> bool {
+    let flagi = fraction::compareFraction(v1.i, v2.i);
+    let flagj = fraction::compareFraction(v1.j, v2.j);
+    let flagk = fraction::compareFraction(v1.k, v2.k);
+    let flag = ((flagi + flagj) + flagk);
+    if (flag == 0){
+        true
+    }
+    else {
+        false
+    }
+    
 }
 
 
@@ -189,4 +218,30 @@ fn test_vector_negative_unit_vectors() {
     assert (sp.num == 3); 
      
         
+}
+
+
+#[test]
+fn test_equal_vector() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 2, 1);
+    let f3 = fraction::toFraction(true, 3, 1);
+    let v1 = toVector(f1, f2, f3);
+    
+    let eq = isEqual(v1, v1);
+    assert (eq); 
+     
+}
+
+
+#[test]
+fn test_not_equal_vector() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 2, 1);
+    let f3 = fraction::toFraction(true, 3, 1);
+    let v1 = toVector(f1, f2, f3);
+    let v2 = toVector(f3, f2, f1);
+    let eq = isEqual(v1, v2);
+    assert (!eq); 
+     
 }
