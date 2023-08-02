@@ -245,3 +245,16 @@ fn test_not_equal_vector() {
     assert (!eq); 
      
 }
+
+
+#[test]
+fn test_sq_modulus() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 1, 1);
+    let f3 = fraction::toFraction(false, 1, 1);
+    let v = toVector(f1, f2, f3);
+    let sqmod = sqModulusVector(v);
+    let sp = scProductVector(v, v);
+    assert (sp.num == sqmod.num);
+    assert (sp.den == sqmod.den);
+}
