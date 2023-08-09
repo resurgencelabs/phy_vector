@@ -1,6 +1,7 @@
 [package]
+name = "phy_vector"
 authors = [""]
-compiler_version = "0.7.1"
+compiler_version = "0.9.0"
 
 [dependencies]
-fraction = { tag = "v1.2.0", git = "https://github.com/resurgencelabs/fraction" }
+fraction = { tag = "v1.2.2", git = "https://github.com/resurgencelabs/fraction" }

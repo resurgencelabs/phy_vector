@@ -1,4 +1,5 @@
 use dep::fraction;
+use dep::std;
 
 global V_MAX: Phy_Vector = Phy_Vector { i: fraction::MAX, j: fraction::MAX, k: fraction::MAX  };
 global V_MIN: Phy_Vector = Phy_Vector { i: fraction::MIN, j: fraction::MIN, k: fraction::MIN  };
@@ -125,6 +126,22 @@ fn isEqual(v1: Phy_Vector, v2: Phy_Vector) -> bool {
     
 }
 
+// Returns true if the vector is a zero vector
+fn isZero(v1: Phy_Vector) -> bool {
+    let v2 = V_ZERO;
+    let flagi = fraction::compareFraction(v1.i, v2.i);
+    let flagj = fraction::compareFraction(v1.j, v2.j);
+    let flagk = fraction::compareFraction(v1.k, v2.k);
+    let flag = ((flagi + flagj) + flagk);
+    if (flag == 0){
+        true
+    }
+    else {
+        false
+    }
+    
+}
+
 
 #[test]
 fn test_create_vector() {
@@ -213,7 +230,9 @@ fn test_vector_negative_unit_vectors() {
     
     let s1 = addVector(un1, un2);
     let s = addVector(s1, un3);
+    
     let sp = sqModulusVector(s);
+    
 
     assert (sp.num == 3); 
      
@@ -246,6 +265,18 @@ fn test_not_equal_vector() {
      
 }
 
+
+#[test]
+fn test_is_zero_vector() {
+    let f1 = fraction::toFraction(true, 0, 1);
+    let f2 = fraction::toFraction(true, 0, 1);
+    let f3 = fraction::toFraction(true, 0, 1);
+    let v = toVector(f1, f2, f3);
+    
+    let ze = isZero(v);
+    assert (ze); 
+     
+}
 
 #[test]
 fn test_sq_modulus() {
