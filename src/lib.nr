@@ -143,6 +143,53 @@ fn isZero(v1: Phy_Vector) -> bool {
 }
 
 
+// Inverts the Vector Along the YZ Plane
+fn invertX(v: Phy_Vector) -> Phy_Vector {
+    let inv = fraction::Fraction {
+        sign: (!v.i.sign),
+        num: v.i.num,
+        den: v.i.den,
+    };
+    let pv = Phy_Vector {
+        i: inv,
+        j: v.j,
+        k: v.k,
+    };
+    pv
+}
+
+// Inverts the Vector Along the ZX Plane
+fn invertY(v: Phy_Vector) -> Phy_Vector {
+    let inv = fraction::Fraction {
+        sign: (!v.j.sign),
+        num: v.j.num,
+        den: v.j.den,
+    };
+    let pv = Phy_Vector {
+        i: v.i,
+        j: inv,
+        k: v.k,
+    };
+    pv
+}
+
+
+// Inverts the Vector Along the XY Plane
+fn invertZ(v: Phy_Vector) -> Phy_Vector {
+    let inv = fraction::Fraction {
+        sign: (!v.k.sign),
+        num: v.k.num,
+        den: v.k.den,
+    };
+    let pv = Phy_Vector {
+        i: v.i,
+        j: v.j,
+        k: inv,
+    };
+    pv
+}
+
+
 #[test]
 fn test_create_vector() {
     let f1 = fraction::toFraction(true, 2, 5);
@@ -288,4 +335,35 @@ fn test_sq_modulus() {
     let sp = scProductVector(v, v);
     assert (sp.num == sqmod.num);
     assert (sp.den == sqmod.den);
+}
+
+#[test]
+fn test_inversion_X() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 1, 1);
+    let f3 = fraction::toFraction(false, 1, 1);
+    let v = toVector(f1, f2, f3);
+    let vix = invertX(v);
+    assert (!vix.i.sign);
+}
+
+
+#[test]
+fn test_inversion_Y() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 1, 1);
+    let f3 = fraction::toFraction(false, 1, 1);
+    let v = toVector(f1, f2, f3);
+    let viy = invertY(v);
+    assert (!viy.j.sign);
+}
+
+#[test]
+fn test_inversion_Z() {
+    let f1 = fraction::toFraction(true, 1, 1);
+    let f2 = fraction::toFraction(true, 1, 1);
+    let f3 = fraction::toFraction(false, 1, 1);
+    let v = toVector(f1, f2, f3);
+    let viz = invertZ(v);
+    assert (viz.k.sign);
 }
