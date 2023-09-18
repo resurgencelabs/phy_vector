@@ -2,7 +2,7 @@
 name = "phy_vector"
 type = "lib"
 authors = [""]
-compiler_version = "0.10.5"
+compiler_version = "0.11.1"
 
 [dependencies]
-fraction = { tag = "v2.1.0", git = "https://github.com/resurgencelabs/fraction" }
+fraction = { tag = "v2.2.0", git = "https://github.com/resurgencelabs/fraction" }
